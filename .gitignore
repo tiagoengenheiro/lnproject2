@@ -1,0 +1,3 @@
+*.zip
+glove.twitter.27B/
+__pycache__/
