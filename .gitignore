@@ -3,3 +3,5 @@ glove.twitter.27B/
 __pycache__/
 *ex.py
 *.docx
+aclImdb/
+venv/
