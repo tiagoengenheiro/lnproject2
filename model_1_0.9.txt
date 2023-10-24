@@ -1,0 +1,12 @@
+Epoch 1/6
+140/140 [==============================] - 56s 340ms/step - loss: 1.0540 - sparse_categorical_accuracy: 0.5241 - val_loss: 0.6920 - val_sparse_categorical_accuracy: 0.6679
+Epoch 2/6
+140/140 [==============================] - 47s 336ms/step - loss: 0.4770 - sparse_categorical_accuracy: 0.8259 - val_loss: 0.5875 - val_sparse_categorical_accuracy: 0.7500
+Epoch 3/6
+140/140 [==============================] - 46s 331ms/step - loss: 0.2593 - sparse_categorical_accuracy: 0.9134 - val_loss: 0.6075 - val_sparse_categorical_accuracy: 0.7750
+Epoch 4/6
+140/140 [==============================] - 48s 343ms/step - loss: 0.1055 - sparse_categorical_accuracy: 0.9679 - val_loss: 0.3550 - val_sparse_categorical_accuracy: 0.8893
+Epoch 5/6
+140/140 [==============================] - 49s 347ms/step - loss: 0.0328 - sparse_categorical_accuracy: 0.9929 - val_loss: 0.3240 - val_sparse_categorical_accuracy: 0.9000
+Epoch 6/6
+140/140 [==============================] - 47s 337ms/step - loss: 0.0203 - sparse_categorical_accuracy: 0.9973 - val_loss: 0.3635 - val_sparse_categorical_accuracy: 0.896

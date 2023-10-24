@@ -3,3 +3,4 @@ glove.twitter.27B/
 __pycache__/
 *ex.py
 *.docx
+saved_models/
