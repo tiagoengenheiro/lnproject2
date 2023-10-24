@@ -29,7 +29,30 @@ X_train_preprocessed=remove_common_words(X_train_preprocessed,most_common_words)
 analyse_feature_per_class(X_train_preprocessed,y_train)
 
 
+# vectorizer = TfidfVectorizer(ngram_range=(1,1),lowercase=False)
+# # #best_number_of_features(X_train,X_test,y_test)
+# #Get size feature before transformation
+# train_size_feature=get_size_feature(X_train)
+# #Tranform to obtain tf-idf count matrix
+# X_train_tf_idf=vectorizer.fit_transform(X_train)
 
+# #Combine with tf-idf features with size_feature for trainset
+# # X_train_tf_idf=np.array(X_train_tf_idf.todense())
+# # X_train_tf_idf=np.hstack((X_train_tf_idf,train_size_feature))
+
+# clf=LinearSVC(dual='auto', random_state=0, tol=1e-05,max_iter=1000,class_weight='balanced')
+
+# clf.fit(X_train_tf_idf, y_train)
+
+# test_size_feature=get_size_feature(X_test)
+# X_test_tf_idf=vectorizer.transform(X_test)
+# #Combine with tf-idf features with size_feature for test set
+# # X_test_tf_idf=np.array(X_test_tf_idf.todense())
+# # X_test_tf_idf=np.hstack((X_test_tf_idf,test_size_feature))
+
+# #Prediction
+# pred=clf.predict(X_test_tf_idf)
+# print(accuracy_score(y_test,pred))
 
 
 

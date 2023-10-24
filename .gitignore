@@ -4,3 +4,7 @@ __pycache__/
 *ex.py
 *.docx
 saved_models/
+aclImdb/
+venv/
+model/
+test_trainer/
