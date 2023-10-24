@@ -8,3 +8,5 @@ aclImdb/
 venv/
 model/
 test_trainer/
+*.rtf
+
