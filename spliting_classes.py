@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 from sklearn.naive_bayes import MultinomialNB, GaussianNB
-from sklearn.metrics import accuracy_score, balanced_accuracy_score,confusion_matrix
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from collections import Counter
 from sklearn.ensemble import RandomForestClassifier
@@ -59,8 +59,10 @@ preds=[]
 best_hypers={0: [0.8928571428571429, {'max_features': 2250, 'kernel': 'rbf', 'C': 1}], 1: [0.9428571428571428, {'max_features': 3000, 'kernel': 'rbf', 'C': 5}]}
 for i,label in enumerate([class1,class2]):
     X_train, X_test, y_train, y_test = train_test_split(np.array(df["REVIEW"]),np.array(label), test_size=0.2,random_state=random_state)
+    print(X_test[0])
     print(np.unique(label))
     vectorizer = TfidfVectorizer(ngram_range=(1,1),lowercase=False,max_features=best_hypers[i][1]["max_features"])
+    
     X_train_tf_idf=vectorizer.fit_transform(X_train)
     #clf=GaussianNB()
     clf=SVC(C=best_hypers[i][1]["C"],kernel=best_hypers[i][1]["kernel"],random_state=random_state)
@@ -68,6 +70,7 @@ for i,label in enumerate([class1,class2]):
     X_test_tf_idf=vectorizer.transform(X_test)
     pred=clf.predict(X_test_tf_idf)
     acc=accuracy_score(y_test,pred)
+    print(acc)
     preds.append(pred)
 
 [pred1,pred2]=preds
@@ -80,18 +83,12 @@ final_preds=np.array(final_preds)
 _, X_test, _, y_test = train_test_split(np.array(df["REVIEW"]),np.array(df["LABEL"]), test_size=0.2,random_state=random_state)
 error_index=y_test!=final_preds
 df_test=pd.DataFrame({"Predicted":final_preds[error_index],"True":y_test[error_index],"Reviews":X_test[error_index]})
-df_test.to_csv("errors.tsv",sep="\t",index=False)
+df_test.to_csv("outputs/errors_sparse.tsv",sep="\t",index=False)
 
 print(accuracy_score(y_test,final_preds))
-labels=['DECEPTIVENEGATIVE','DECEPTIVEPOSITIVE','TRUTHFULNEGATIVE','TRUTHFULPOSITIVE']
-cm=confusion_matrix(y_test,final_preds,labels=labels)
-print(cm)
-plt.figure(figsize=(8, 6))
-num_classes=4
-sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=["DCN","DCP","TFN","TFP"], yticklabels=["DCN","DCP","TFN","TFP"])
-plt.xlabel('Predicted')
-plt.ylabel('Actual')
-plt.title('Confusion Matrix')
-plt.savefig('confusion_matrix.png')
+save_confusion_matrices(y_test,final_preds,model_name='sparse')
+#from sklearn.metrics import multilabel_confusion_matrix
+
+#multilabel_confusion_matrix(y_test,final_preds))
 
 

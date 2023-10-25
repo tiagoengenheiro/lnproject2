@@ -6,21 +6,24 @@ from sklearn.metrics import accuracy_score
 from collections import Counter
 import copy
 import re,string
-from nltk.tokenize import word_tokenize
+from sklearn.metrics import confusion_matrix,multilabel_confusion_matrix
+#from nltk.tokenize import word_tokenize
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-def pre_processing(X_array):
-    X_train_preprocessed=copy.deepcopy(X_array)
-    for i,review in enumerate(X_array):
-        review_pre_processed=word_tokenize(review) #tokenize in words
-        review_pre_processed=[re.sub("[/`-]"," ",word) for word in review_pre_processed]
-        review_pre_processed=[word for word in review_pre_processed if word not in (string.punctuation)]
-        review_pre_processed=[word for word in review_pre_processed if word not in ["''","..."]]
-        review_pre_processed=[word for word in review_pre_processed if word.strip()]
-        #review_pre_processed=[word.lower() for word in review_pre_processed]
-        X_train_preprocessed[i]=np.array(review_pre_processed)
-    return X_train_preprocessed
+# def pre_processing(X_array):
+#     X_train_preprocessed=copy.deepcopy(X_array)
+#     for i,review in enumerate(X_array):
+#         review_pre_processed=word_tokenize(review) #tokenize in words
+#         review_pre_processed=[re.sub("[/`-]"," ",word) for word in review_pre_processed]
+#         review_pre_processed=[word for word in review_pre_processed if word not in (string.punctuation)]
+#         review_pre_processed=[word for word in review_pre_processed if word not in ["''","..."]]
+#         review_pre_processed=[word for word in review_pre_processed if word.strip()]
+#         #review_pre_processed=[word.lower() for word in review_pre_processed]
+#         X_train_preprocessed[i]=np.array(review_pre_processed)
+#     return X_train_preprocessed
 
 def get_most_common_words_among_label(X_array_preprocessed,y_array,k=300):
     most_common_words=set()
@@ -77,6 +80,26 @@ def tf_idf_extractor(X_array,y_array):
     X_test_tf_idf=vectorizer.transform(X_array)
     pred=clf.predict(X_test_tf_idf)
     print(accuracy_score(y_array,pred))
+
+def save_confusion_matrices(y_true,y_pred,model_name='sparse'):
+    labels=['DECEPTIVENEGATIVE','DECEPTIVEPOSITIVE','TRUTHFULNEGATIVE','TRUTHFULPOSITIVE']
+    cm=confusion_matrix(y_true,y_pred,labels=labels)
+    print(cm)
+    plt.figure(figsize=(8, 6))
+    label_abv=["DCN","DCP","TFN","TFP"]
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=label_abv, yticklabels=label_abv)
+    plt.xlabel('Predicted')
+    plt.ylabel('Actual')
+    plt.title('Confusion Matrix')
+    plt.savefig(f'images/confusion_matrix_{model_name}.png')
+    mcm=multilabel_confusion_matrix(y_true,y_pred,labels=labels)
+    for i,label in enumerate(label_abv):
+        plt.figure(figsize=(8, 6))
+        sns.heatmap(mcm[i], annot=True, fmt="d", cmap="Blues")
+        plt.xlabel('Predicted')
+        plt.ylabel('Actual')
+        plt.title(f'Confusion Matrix for label: {labels[i]}')
+        plt.savefig(f'images/confusion_matrix_{label}_{model_name}.png')
 
 
             
