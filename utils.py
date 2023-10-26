@@ -99,7 +99,7 @@ def save_confusion_matrices(y_true,y_pred,model_name='sparse'):
         plt.xlabel('Predicted')
         plt.ylabel('Actual')
         plt.title(f'Confusion Matrix for label: {labels[i]}')
-        plt.savefig(f'images/confusion_matrix_{label}_{model_name}.png')
+        plt.savefig(f'images/{model_name}/confusion_matrix_{label}_{model_name}.png')
 
 
             
