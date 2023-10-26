@@ -70,6 +70,8 @@ for i,label in enumerate([class1,class2]):
     X_test_tf_idf=vectorizer.transform(X_test)
     pred=clf.predict(X_test_tf_idf)
     acc=accuracy_score(y_test,pred)
+    save_acc_per_label(y_test,pred,model_name=f'sparse_{i}')
+
     print(acc)
     preds.append(pred)
 
@@ -87,7 +89,7 @@ df_test.to_csv("outputs/errors_sparse.tsv",sep="\t",index=False)
 
 print(accuracy_score(y_test,final_preds))
 save_confusion_matrices(y_test,final_preds,model_name='sparse')
-#from sklearn.metrics import multilabel_confusion_matrix
+save_acc_per_label(y_test,final_preds,model_name='sparse_agg')
 
 #multilabel_confusion_matrix(y_test,final_preds))
 
