@@ -84,6 +84,8 @@ for el1,el2 in zip(pred1,pred2):
 final_preds=np.array(final_preds)
 _, X_test, _, y_test = train_test_split(np.array(df["REVIEW"]),np.array(df["LABEL"]), test_size=0.2,random_state=random_state)
 error_index=y_test!=final_preds
+print(y_test)
+np.save("val_true_labels",y_test)
 df_test=pd.DataFrame({"Predicted":final_preds[error_index],"True":y_test[error_index],"Reviews":X_test[error_index]})
 df_test.to_csv("outputs/errors_sparse.tsv",sep="\t",index=False)
 

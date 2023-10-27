@@ -9,4 +9,4 @@ venv/
 model/
 test_trainer/
 *.rtf
-
+*.pdf
